@@ -1,7 +1,7 @@
 # E-Learn — AI-Assisted Learning Resource Recommender
 
 A Flask web application that searches YouTube and web resources for a learning topic, generates three prerequisite concepts with Gemini, and ranks resources using an explainable scoring layer.
-
+**[🚀 Live Demo](https://e-learning-recommender.vercel.app/)**
 ## Architecture
 
 ```text
@@ -75,3 +75,9 @@ Open `http://127.0.0.1:5000`.
 - Add a persistent database for search history/user preferences.
 - Add richer web-resource metadata if a reliable source provides it.
 - Replace lexical relevance with embeddings only if the project genuinely needs semantic matching.
+
+
+## 🔗 Links
+
+- 🚀 **Live Demo:** https://e-learning-recommender.vercel.app/
+- 💻 **GitHub:** https://github.com/Ayushraj-04/e-learning-recommender
