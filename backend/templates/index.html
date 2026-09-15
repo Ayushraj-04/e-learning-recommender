@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Learn | Smart Resource Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+    <div class="logo"><i class="fas fa-layer-group"></i> E-Learn</div>
+</header>
+
+<main class="hero">
+    <div class="hero-content">
+        <span class="eyebrow">AI-ASSISTED LEARNING DISCOVERY</span>
+        <h1>Find the right resource to learn your next topic.</h1>
+        <p>
+            Search across YouTube and the web, generate topic prerequisites with Gemini,
+            and rank resources using transparent relevance and quality signals.
+        </p>
+
+        <form class="search-form" action="/results" method="GET">
+            <div class="search-input-group">
+                <i class="fas fa-search"></i>
+                <input
+                    type="text"
+                    name="topic"
+                    maxlength="120"
+                    placeholder="Search topics (e.g., Python, SQL, Machine Learning)..."
+                    required
+                >
+            </div>
+
+            <div class="filter-group">
+                <select name="duration" aria-label="Preferred duration">
+                    <option value="all">Any Duration</option>
+                    <option value="short">Short (&lt; 10 min)</option>
+                    <option value="medium">Medium (10–30 min)</option>
+                    <option value="long">Long (&gt; 30 min)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-bolt"></i> Generate Recommendations
+            </button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

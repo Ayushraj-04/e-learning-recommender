@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results for "{{ topic }}"</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+    <div class="logo"><i class="fas fa-layer-group"></i> E-Learn</div>
+    <a class="nav-link" href="/">New Search <i class="fas fa-search"></i></a>
+</header>
+
+<main class="container">
+    <section class="results-header">
+        <div>
+            <span class="eyebrow">RANKED RESULTS</span>
+            <h1>Resources for <span>"{{ topic | title }}"</span></h1>
+        </div>
+        <div class="live-filters">
+            <label for="durationFilter">Duration</label>
+            <select id="durationFilter">
+                <option value="all" {% if duration == "all" %}selected{% endif %}>All</option>
+                <option value="short" {% if duration == "short" %}selected{% endif %}>Short</option>
+                <option value="medium" {% if duration == "medium" %}selected{% endif %}>Medium</option>
+                <option value="long" {% if duration == "long" %}selected{% endif %}>Long</option>
+            </select>
+        </div>
+    </section>
+
+    <section class="prereq-panel">
+        <div>
+            <span class="section-label">AI-GENERATED PREREQUISITES</span>
+            <p>Suggested foundations for learning <strong>{{ topic }}</strong>.</p>
+        </div>
+        <div class="prereq-list">
+            {% for prereq in prerequisites %}
+                <span>{{ prereq }}</span>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="youtube">
+            <i class="fab fa-youtube"></i> Video Tutorials
+        </button>
+        <button class="tab-btn" data-tab="website">
+            <i class="fas fa-book-open"></i> Web Resources
+        </button>
+    </div>
+
+    {% for platform in ["youtube", "website"] %}
+    <section id="{{ platform }}" class="tab-content {% if platform == 'youtube' %}active{% endif %}">
+        <div class="resource-grid">
+            {% set ns = namespace(found=false) %}
+            {% for r in resources %}
+                {% if r.platform == platform %}
+                    {% set ns.found = true %}
+                    <article class="result-card"
+                             data-duration="{{ r.duration }}"
+                             data-score="{{ r.score }}">
+                        <div class="score-badge">{{ r.score }}% match</div>
+                        <div class="card-body">
+                            <h2>
+                                {% if platform == "youtube" %}
+                                    <i class="fab fa-youtube"></i>
+                                {% else %}
+                                    <i class="fas fa-globe"></i>
+                                {% endif %}
+                                {{ r.title }}
+                            </h2>
+
+                            <div class="badges">
+                                <span class="badge">{{ r.duration | title }}</span>
+                                <span class="badge">{{ r.cost | title }}</span>
+                                {% if r.domain %}
+                                    <span class="badge">{{ r.domain }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="why">
+                                <strong>Why recommended</strong>
+                                <ul>
+                                    {% for reason in r.reasons %}
+                                        <li>{{ reason }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                            {% if r.views %}
+                                <p class="metadata">{{ "{:,}".format(r.views) }} views</p>
+                            {% endif %}
+                        </div>
+
+                        <a href="{{ r.link }}" target="_blank" rel="noopener noreferrer" class="btn-card">
+                            Open Resource <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </article>
+                {% endif %}
+            {% endfor %}
+
+            {% if not ns.found %}
+                <div class="no-results">No {{ platform }} resources were available.</div>
+            {% endif %}
+        </div>
+    </section>
+    {% endfor %}
+</main>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
