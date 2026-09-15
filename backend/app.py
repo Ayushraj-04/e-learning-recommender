@@ -10,11 +10,11 @@ load_dotenv(BASE_DIR / ".env")
 
 from flask import Flask, render_template, request
 
-from services.gemini_service import generate_prerequisites
-from services.recommender import rank_resources
-from services.search_service import fetch_articles
-from services.youtube_service import fetch_youtube_videos
-from services.runtime_controls import TTLCache, RateLimiter
+from backend.services.gemini_service import generate_prerequisites
+from backend.services.recommender import rank_resources
+from backend.services.search_service import fetch_articles
+from backend.services.youtube_service import fetch_youtube_videos
+from backend.services.runtime_controls import TTLCache, RateLimiter
 
 
 
